@@ -1,19 +1,41 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_app/cookbook.dart';
 import 'frame.dart';
 
-void main() => runApp(new MaterialApp(
-  title: 'My App',
-  home: new ShoppingList(
-    products: <Product>[
-      new Product(name:'Eggs'),
-      new Product(name: 'Flour'),
-      new Product(name: 'Chocolate chips'),
-    ],
-  ),
-//  home: new TutorialHome()
-//  home: new MyScaffold()
-));
+/*
+   对于打算学习Flutter的同学提供一个初步学习的路线：
+
+   1. 学习dart语言的基本语法
+
+   2. 学习大部分基础Widget的使用方式
+
+   3. 学习各种Key的使用以及作用
+
+   4. 了解Naviagator的实现方式
+
+   5. 了解setState的过程
+
+   6. 了解Dart的异步机制
+
+   7. 了解Redux，Bloc等架构
+*
+* */
+void main() => runApp(
+    MyThemeApp()); // 使用主题共享颜色和字体样式
+//    new MaterialApp(
+//      title: 'My App',
+//      home: new FirstScreen(),  // 导航到新页面并返回
+//  home: new ShoppingList( // 一个较完整的例子
+//    products: <Product>[
+//      new Product(name:'Eggs'),
+//      new Product(name: 'Flour'),
+//      new Product(name: 'Chocolate chips'),
+//    ],
+//  ),
+//  home: new TutorialHome() // 使用Material组件
+//  home: new MyScaffold()   // 基础 Widget
+//    ));
 //void main() => runApp(HelloApp());
 //void main() => runApp(MyApp());
 
