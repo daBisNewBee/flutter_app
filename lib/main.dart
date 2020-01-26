@@ -1,7 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'frame.dart';
 
-void main() => runApp(HelloApp());
+void main() => runApp(new MaterialApp(
+  title: 'My App',
+  home: new ShoppingList(
+    products: <Product>[
+      new Product(name:'Eggs'),
+      new Product(name: 'Flour'),
+      new Product(name: 'Chocolate chips'),
+    ],
+  ),
+//  home: new TutorialHome()
+//  home: new MyScaffold()
+));
+//void main() => runApp(HelloApp());
 //void main() => runApp(MyApp());
 
 class HelloApp extends StatelessWidget {
@@ -47,7 +60,7 @@ class RandomWords extends StatefulWidget {
 
 class RandomWordsState extends State<RandomWords> {
   final _suggestions = <WordPair>[];
-  final TextStyle _biggerFont = new TextStyle(fontSize: 18.0);
+  final _biggerFont = new TextStyle(fontSize: 18.0);
   final _saved = new Set<WordPair>();
 
   @override
@@ -153,6 +166,7 @@ class MyApp extends StatelessWidget {
   }
 }
 
+// 为什么StatefulWidget和State是单独的对象?
 class MyHomePage extends StatefulWidget {
   MyHomePage({Key key, this.title}) : super(key: key);
 
