@@ -1,0 +1,19 @@
+填充：EdgeInsets
+
+Container:
+    对子widget进行 绘制(painting)、定位(positioning)、调整大小(sizing)操作
+    可以根据几个属性，判断其能力：
+    1. Alignment：约束child的位置
+    2. Constraints：控件占用的空间大小
+    3. Margin：给Container设置"外"边距
+    4. Padding 设置Container内边距
+
+所有布局widget都有一个
+"child"属性（例如Center或Container）
+"children"属性对应的是widget列表（例如Row，Column，ListView或Stack）
+
+对齐：MainAxisAlignment、CrossAxisAlignment
+    需要弄清一个概念，row(行)、column(列)的主轴、副轴是不一样的！
+    row 的 mainAxis 是横向；crossAxis 是纵向
+    column 的 mainAxis 是纵向；crossAxis 是横向
+
