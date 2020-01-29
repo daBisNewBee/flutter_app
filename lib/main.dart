@@ -3,6 +3,7 @@ import 'package:english_words/english_words.dart';
 import 'package:flutter_app/cookbook.dart';
 import 'frame.dart';
 import 'layout.dart';
+import 'manageState.dart';
 
 /*
    对于打算学习Flutter的同学提供一个初步学习的路线：
@@ -23,7 +24,8 @@ import 'layout.dart';
 *
 * */
 void main() => runApp(
-      MyLayoutApp()); // 构建布局
+    ManageStateApp()); // 管理状态
+//      MyLayoutApp()); // 构建布局
 //    MyThemeApp()); // 使用主题共享颜色和字体样式
 //    new MaterialApp(
 //      title: 'My App',
