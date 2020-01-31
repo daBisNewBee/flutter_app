@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_app/cookbook.dart';
+import 'package:flutter_app/forAndroid.dart';
 import 'frame.dart';
 import 'layout.dart';
 import 'manageState.dart';
@@ -25,7 +26,8 @@ import 'key.dart';
 *
 * */
 void main() => runApp(
-    ScreenApp()); // 何时需要使用到key？
+    ForAndroidApp()); // 异步UI
+//    ScreenApp()); // 何时需要使用到key？
 //    ManageStateApp()); // 管理状态
 //      MyLayoutApp()); // 构建布局
 //    MyThemeApp()); // 使用主题共享颜色和字体样式
