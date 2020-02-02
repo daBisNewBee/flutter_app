@@ -10,11 +10,16 @@ import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import io.flutter.embedding.android.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
+import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.EventChannel;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.MethodChannel;
+import io.flutter.plugin.common.StandardMessageCodec;
 import io.flutter.plugins.GeneratedPluginRegistrant;
 import io.flutter.view.FlutterView;
 
@@ -23,10 +28,12 @@ public class MainActivity extends FlutterActivity {
     //channel的名称，由于app中可能会有多个channel，这个名称需要在app内是唯一的。
     private static final String CHANNEL_METHOD = "samples.flutter.io/battery";
     private static final String CHANNEL_EVENT = "samples.flutter.io/charging";
+    private static final String CHANNEL_BASIC = "samples.flutter.io/basic";
 
     private FlutterView mFlutterView;
     private MethodChannel mMethodChannel;
     private EventChannel mEventChannel;
+    private BasicMessageChannel mBasicMessageChannel;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,6 +81,35 @@ public class MainActivity extends FlutterActivity {
                 chargingStateChangeReceiver = null;
             }
         });
+        mBasicMessageChannel = new BasicMessageChannel(flutterEngine.getDartExecutor(), CHANNEL_BASIC, StandardMessageCodec.INSTANCE);
+        mBasicMessageChannel.setMessageHandler(new BasicMessageChannel.MessageHandler() {
+            @Override
+            public void onMessage(Object o, BasicMessageChannel.Reply reply) {
+                Map<Object, Object> params = (Map<Object, Object>)o;
+                String methodName = (String)params.get("method");
+                String ontent = (String)params.get("ontent");
+                int code = (Integer) params.get("code");
+                Log.d("flutter", "Native methodName: " + methodName);
+                Log.d("flutter", "ontent: " + ontent);
+                Log.d("flutter", "code: " + code);
+                Map<String,Object> resultMap = new HashMap<>();
+                if (methodName.equals("test")) {
+                    resultMap.put("message", "这是Native返回的字符串");
+                    resultMap.put("code", 200);
+                } else if (methodName.equals("test2")) {
+                    channelSendMessage();
+                }
+                //回调flutter 此方法只能使用一次
+                reply.reply(resultMap);
+            }
+        });
+    }
+
+    private void channelSendMessage() {
+        Map<String,Object> params = new HashMap<>();
+        params.put("message", "channelSendMessage Native中的数据");
+        params.put("code",10000);
+        mBasicMessageChannel.send(params);
     }
 
     private BroadcastReceiver createChargingStateChangeReceiver(final EventChannel.EventSink events) {
