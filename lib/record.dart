@@ -13,11 +13,13 @@ class RecordApp extends StatelessWidget {
 
   // channel的名称要和Native端的一致
   // MethodChannel提供了方法调用的通道
-  static const platform = const MethodChannel("samples.flutter.io/battery");
+  static const MethodChannel platform = const MethodChannel("samples.flutter.io/battery");
+  static const EventChannel eventChannel = const EventChannel("samples.flutter.io/charging");
 
   @override
   Widget build(BuildContext context) {
     platform.setMethodCallHandler(platformCallHandler);
+    eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError, onDone: _onDone);
 
     return MaterialApp(
       title: '录音',
@@ -46,6 +48,7 @@ class RecordApp extends StatelessWidget {
               new RaisedButton(
                 child: Text('Native调用Flutter方法'),
                   onPressed: _getMsgNativeFromFlutter),
+
             ],
           ),
         ),
@@ -114,5 +117,17 @@ class RecordApp extends StatelessWidget {
 
    _getMsgNativeFromFlutter() async {
      await platform.invokeMethod('invokeFlutterMethod');
+  }
+
+  _onError(Object error) {
+    print('_onError:' + error);
+  }
+
+  _onEvent(Object event) {
+    print('_onEvent:' + event.toString());
+  }
+
+  _onDone() {
+    print('_onDone.');
   }
 }
