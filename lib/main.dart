@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
 import 'package:flutter_app/cookbook.dart';
 import 'package:flutter_app/forAndroid.dart';
+import 'package:flutter_app/record.dart';
 import 'frame.dart';
 import 'layout.dart';
 import 'manageState.dart';
@@ -26,7 +27,8 @@ import 'key.dart';
 *
 * */
 void main() => runApp(
-    ForAndroidApp()); // 异步UI
+      RecordApp()); // 录制
+//    ForAndroidApp()); // 异步UI
 //    ScreenApp()); // 何时需要使用到key？
 //    ManageStateApp()); // 管理状态
 //      MyLayoutApp()); // 构建布局

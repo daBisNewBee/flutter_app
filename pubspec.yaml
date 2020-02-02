@@ -27,6 +27,8 @@ dependencies:
   # 类似于"OkHttp"
   http: ^0.12.0 #latest version
   sprintf: ^4.0.2
+  # 录制和播放
+  flutter_sound: ^2.0.0
 
 dev_dependencies:
   flutter_test:
