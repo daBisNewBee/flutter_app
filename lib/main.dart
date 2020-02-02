@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
-import 'package:flutter_app/cookbook.dart';
-import 'package:flutter_app/forAndroid.dart';
-import 'package:flutter_app/record.dart';
+import 'cookbook.dart';
+import 'forAndroid.dart';
+import 'record.dart';
 import 'frame.dart';
 import 'layout.dart';
 import 'manageState.dart';
