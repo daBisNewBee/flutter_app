@@ -1,7 +1,10 @@
 import 'dart:async';
 import 'dart:collection';
+import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_sound/flutter_sound.dart';
@@ -53,7 +56,10 @@ class RecordApp extends StatelessWidget {
     methodChannel.setMethodCallHandler(platformCallHandler);
     eventChannel.receiveBroadcastStream().listen(_onEvent, onError: _onError, onDone: _onDone);
     basicMessageChannel.setMessageHandler(_basicMessageChannelHandler);
-
+//    debugPaintSizeEnabled = true; // 可以打印布局边界！！！
+//    debugPaintBaselinesEnabled = true; // 文字基线
+    // debug* 下的字段 仅在 调试模式下工作！
+//    timeDilation = 50.0; // 调试动画最简单的方法是减慢它们的速度
     return MaterialApp(
       title: '录音',
       home: Scaffold(
@@ -182,6 +188,20 @@ class RecordApp extends StatelessWidget {
   }
 
   Future<Map> sendMessage(Map params) async {
+//    debugger(when: params.length > 0); // 代码断点：条件成立时中断！
+    debugPrint("用这个方法打印可以防止日志被丢弃.");
+    /*
+    * 用于转储Widgets库的状态
+    * TODO： 实际作用待验证
+    * */
+//    debugDumpApp();
+    /*
+    * 转储渲染树
+    * "当调试布局问题时，关键要看的是size和constraints字段。
+    *  约束沿着树向下传递，尺寸向上传递。"
+    * */
+//    debugDumpRenderTree();
+//    debugDumpSemanticsTree(); // 打印语义树
     Map reply = await basicMessageChannel.send(params);
     int code = reply["code"];
     String message = reply["message"];
