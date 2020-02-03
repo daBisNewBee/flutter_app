@@ -13,6 +13,20 @@ import 'package:flutter_sound/ios_quality.dart';
 *
 * Flutter通过BasicMessageChannel实现Flutter 与Android iOS 的双向通信：
 * https://blog.csdn.net/zl18603543572/article/details/96043692
+*
+* (原理类)Flutter之MethodChannel:
+* https://blog.csdn.net/arinasiyyj/article/details/96873000
+*
+*
+* 热更新的几点思考：
+* 1. 可更新：根Widget树下的变更(刷新Widget树就可以生效了)
+*           ex, 修改main()下入口不会生效，因为跟Widget改变了。
+* 2. 不可更新：状态，及状态依赖相关
+*           ex, 1. 全局变量和静态字段的修改不可变更，因为其被视为状态
+*               (有个例外，被const修饰的字段可以，因为"const字段被视为别名而不是状态")
+*               2. widget的属性变化，不可生效。stless与stful相互转变，因为这影响了当前状态的变化
+*
+*
 * */
 class RecordApp extends StatelessWidget {
   FlutterSound flutterSound = FlutterSound();
@@ -26,6 +40,13 @@ class RecordApp extends StatelessWidget {
   static const EventChannel eventChannel = const EventChannel("samples.flutter.io/charging");
   // 传递字符串和一些半结构体的数据，具体结构参考"MessageCodec"的几个子类
   static const BasicMessageChannel basicMessageChannel = const BasicMessageChannel("samples.flutter.io/basic", StandardMessageCodec());
+
+  final array = [1,2,3,5]; // 注意：这里的成员修改后，热重载后不会生效
+  static const foo = 4; // 热更新有效！对const字段值的更改始终会重新加载，
+  final bar = foo; // 注意！热更新无效！需要支持热更新，要改成以下两种方式！
+//  static const bar = foo;
+//  get bar => foo;       // TODO:
+  
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +101,7 @@ class RecordApp extends StatelessWidget {
         numChannels: 2,
         codec: t_CODEC.CODEC_AAC, // CODEC_PCM 不支持
         iosQuality: IosQuality.HIGH,
-    );
+);
     print('result:' + result);
     _audioPath = result;
 
@@ -154,6 +175,10 @@ class RecordApp extends StatelessWidget {
 
   _sendMsgNaive2Flutter() {
     sendMessage({"method":"test2", "ontent":"这是Flutter的数据2", "code":300});
+    // 以下验证热更新
+    print("array: $array");
+    print('foo:$foo');
+    print('bar:$bar');
   }
 
   Future<Map> sendMessage(Map params) async {
