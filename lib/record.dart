@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:collection';
 import 'dart:developer';
 
+import 'package:battery/battery.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/scheduler.dart';
@@ -93,6 +94,7 @@ class RecordApp extends StatelessWidget {
               RaisedButton(
                 child: Text('Native发送消息到Flutter'),
                 onPressed: _sendMsgNaive2Flutter),
+              BatteryText(),
             ],
           ),
         ),
@@ -215,5 +217,68 @@ class RecordApp extends StatelessWidget {
     print('_basicMessageChannelHandler: code:$code message:$message');
 //    Map ret = {"a-key":"a-value","b-key":"b-value"};
     return null;
+  }
+}
+
+class BatteryText extends StatefulWidget {
+  @override
+  _BatteryTextState createState() => _BatteryTextState();
+}
+
+class _BatteryTextState extends State<BatteryText> {
+  Battery _battery = Battery();
+  BatteryState _batteryState;
+  StreamSubscription<BatteryState> _batteryStreamSubscription; // TODO: Stream* 用法还不会
+
+  @override
+  void initState() {
+    super.initState();
+    initBattery();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: <Widget>[
+        Text('当前电量: $_batteryState'),
+        RaisedButton(
+          child: Text('点我'),
+          onPressed: ()async{
+            final batteryLevel = await _battery.batteryLevel;
+            showDialog<void>(
+                context: context,
+                builder: (_) => AlertDialog(
+                  content: Text('Battery: $batteryLevel'),
+                  actions: <Widget>[
+                    FlatButton(
+                      child: const Text('OK'),
+                      onPressed: () {
+                        Navigator.pop(context);
+                      },
+                    )
+                  ],
+                ),
+            );
+          },
+        ),
+      ],
+    );
+  }
+
+  void initBattery() {
+    _batteryStreamSubscription =
+        _battery.onBatteryStateChanged.listen((BatteryState state) {
+      setState(() {
+        _batteryState = state;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    if (_batteryStreamSubscription != null) {
+      _batteryStreamSubscription.cancel();
+    }
   }
 }
