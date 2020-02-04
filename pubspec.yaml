@@ -33,10 +33,14 @@ dependencies:
 # 指定一个最小和最大的版本号,如: url_launcher: '>=1.9.9 <2.0.1'
 # ^1.2.3 is equivalent to '>=1.2.3 <2.0.0'
   battery: ^0.3.1+7
+  json_annotation: ^2.0.0
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+  json_annotation: ^2.0.0
+  build_runner: ^1.0.0
 
 
 # For information on the generic Dart part of this file, see the
