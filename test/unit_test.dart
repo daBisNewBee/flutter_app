@@ -1,5 +1,6 @@
 
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:flutter_app/user.dart';
 import 'package:flutter_test/flutter_test.dart';
@@ -36,8 +37,20 @@ void main() {
     @deprecated
     var encode2JsonMap = user.toJson();
     print('user.toJson: $encode2JsonMap');
+  });
 
+  test('httpclient', () async {
+    var url = 'https://httpbin.org/ip';
+    var httpClient = HttpClient();
 
-
+    var request = await httpClient.getUrl(Uri.parse(url));
+    var response = await request.close();
+    if (response.statusCode == HttpStatus.OK) {
+      var jsonStr = await response.transform(utf8.decoder).join();
+      var data = json.decode(jsonStr);
+      print('result :' + data['origin']);
+    } else {
+      print('ERROR:' + response.statusCode.toString());
+    }
   });
 }
