@@ -30,7 +30,7 @@ class MyLayoutApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
+    print('MyLayoutApp build:');
     Widget titleSection = new Container(
       padding: const EdgeInsets.all(32.0),// 上下左右各添加32像素补白
       child: new Row(
@@ -41,6 +41,7 @@ class MyLayoutApp extends StatelessWidget {
               // //显式指定对齐方式为左对齐，排除对齐干扰
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
+                // Container也是一个widget，允许您自定义其子widget。如果要添加填充，边距，边框或背景色，请使用Container来设置
                 new Container(
                   // 上下各添加8像素补白
                   padding: const EdgeInsets.symmetric(vertical:8.0),
@@ -150,7 +151,7 @@ class MyLayoutApp extends StatelessWidget {
                   child: new Text(
                     'Fuck You Title.',
                     style: new TextStyle(
-                      fontSize: 20.0,
+                      fontSize: 30.0,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
                     ),
@@ -248,6 +249,7 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
 
   @override
   Widget build(BuildContext context) {
+    print('_FavoriteWidgetState build:' + '$_favoriteCount');
     return new Row(
       mainAxisSize: MainAxisSize.min,
       children: <Widget>[
@@ -261,8 +263,9 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
 
         // 当文本在40和41之间变化时，将文本放在SizedBox中并设置其宽度
         // 可防止出现明显的“跳跃” ，因为这些值具有不同的宽度。
+//        Text('$_favoriteCount'),
         new SizedBox(
-          width: 18.0,
+          width: 28.0,
           child: new Text('$_favoriteCount'), // _favoriteCount.toString()
         ),
       ],
@@ -270,6 +273,16 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
   }
 
   void _toggleFavorite() {
+
+    /*
+    * 关于"setState"的几个考虑：
+    * 1. 为什么 放在逻辑之前、之后执行，ui都会更新？
+    *    标记到脏链表，等待更新帧信号的来临从而刷新需要重构的界面
+    * 2. 为什么 每次点击，都会执行到"_FavoriteWidgetState build" ？
+    * */
+    setState(() {
+    });
+
     setState(() {
       if (_isFavorited) {
         _favoriteCount-=1;
@@ -278,5 +291,9 @@ class _FavoriteWidgetState extends State<FavoriteWidget> {
       }
       _isFavorited = !_isFavorited;
     });
+
+    setState(() {
+    });
+
   }
 }

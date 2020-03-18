@@ -17,3 +17,22 @@ Container:
     row 的 mainAxis 是横向；crossAxis 是纵向
     column 的 mainAxis 是纵向；crossAxis 是横向
 
+setState 流程：
+// 标记"脏"
+1. setState
+2. _element.markNeedsBuild()
+3. owner.scheduleBuildFor(this);
+4. _dirtyElements.add(element);
+5. .....
+
+// "当[WidgetsBinding.drawFrame]中调用 buildScope 的时候能够重构 element"
+TODO：还不能理解这个流程!
+
+参考：
+[Flutter setState做了些什么事情](https://www.jianshu.com/p/a727ab7948e0)
+[Flutter运行机制-从启动到显示](https://book.flutterchina.club/chapter14/flutter_app_startup.html)
+
+结论：
+setState 调用时会自己添加到 BuildOwner 的_dirtyElements 脏链表中，然后调用 window.scheduleFrame()，最终等待更新帧信号的来临从而刷新需要重构的界面。
+
+
