@@ -13,7 +13,7 @@ import android.util.Log;
 import java.util.HashMap;
 import java.util.Map;
 
-import io.flutter.embedding.android.FlutterActivity;
+import io.flutter.app.FlutterActivity;
 import io.flutter.embedding.engine.FlutterEngine;
 import io.flutter.plugin.common.BasicMessageChannel;
 import io.flutter.plugin.common.EventChannel;
@@ -40,6 +40,7 @@ public class MainActivity extends FlutterActivity {
         super.onCreate(savedInstanceState);
     }
 
+    /*
     @Override
     public void configureFlutterEngine(FlutterEngine flutterEngine) {
         super.configureFlutterEngine(flutterEngine);
@@ -104,6 +105,7 @@ public class MainActivity extends FlutterActivity {
             }
         });
     }
+     */
 
     private void channelSendMessage() {
         Map<String,Object> params = new HashMap<>();
