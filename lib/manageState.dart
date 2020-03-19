@@ -9,6 +9,17 @@ import 'package:flutter/material.dart';
   选择何种，两个原则：
   1. 如果状态是用户数据，如复选框的选中状态、滑块的位置，则该状态最好由父widget管理
   2. 如果所讨论的状态是有关界面外观效果的，例如动画，那么状态最好由widget本身来管理.
+  *
+  * 所谓的"管理"意思是：
+  * 在哪里执行：
+  * "
+  * setState(() {
+      _highlight = true;
+    });
+  * 在本控件内执行，就是本控件内自己管理；ex,TapBpoxA,
+  * 在其他控件执行，就是其他控件来管理！ex,TapboxB由ParentWidget来管理，
+  *                                 TapboxC的active由ParentWidget来管理，highlight由自己管理
+  * "
 * */
 
 // TapboxA 管理自身状态.
@@ -46,6 +57,11 @@ class _TapboxAState extends State<TapboxA> {
     setState(() {
       _isActive = !_isActive;
     });
+  }
+
+  @override
+  void initState() {
+    print('_TapboxAState initState.');
   }
 
 }
@@ -97,9 +113,14 @@ class _ParentWidgetState extends State<ParentWidget> {
   }
 
   @override
+  void initState() {
+    print('_ParentWidgetState initState');
+  }
+
+  @override
   Widget build(BuildContext context) {
-    // return new TapboxB {
-    return new TapboxC (
+     return new TapboxB (
+//    return new TapboxC (
         onChanged: _handleTapboxChanged,
         active: _active,
     );

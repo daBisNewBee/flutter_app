@@ -50,7 +50,7 @@ class _StatefulColorTileState extends State<StatefulColorTile> {
       color: color,
       width: 100.0,
       height: 100.0,
-    );;
+    );
   }
 }
 
@@ -64,7 +64,9 @@ class Screen extends StatefulWidget {
 
 class _ScreenState extends State<Screen> {
   List<Widget> widgets = [
-    StatefulColorTile(key:UniqueKey()), // key重要！想想为什么！
+//    StatefulColorTile(), // key重要！没有key就不会互换，想想为什么！
+//    StatefulColorTile(), // key重要！没有key就不会互换，想想为什么！
+    StatefulColorTile(key:UniqueKey()),
     StatefulColorTile(key:UniqueKey()),
 //    StatelessColorTile(),
 //    StatelessColorTile(),
@@ -72,10 +74,11 @@ class _ScreenState extends State<Screen> {
 
   @override
   Widget build(BuildContext context) {
+    print('_ScreenState build.');
     return Scaffold(
-        appBar: AppBar(title: Text('KeyFAQ'),),
+        appBar: AppBar(title: Text('KeyFAQ')),
         body: Center(
-          child: Row(
+          child: Column(
             mainAxisSize: MainAxisSize.min,
             children: widgets,
           ),
@@ -90,7 +93,8 @@ class _ScreenState extends State<Screen> {
 
   void _handleOnPressed() {
     setState(() {
-      widgets.insert(0, widgets.removeAt(1));
+      widgets.insert(0, widgets.removeLast());
+//      widgets.insert(0, widgets.removeAt(1));
     });
   }
 }

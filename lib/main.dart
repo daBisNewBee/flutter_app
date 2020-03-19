@@ -30,8 +30,8 @@ void main() => runApp(
 //      RecordApp()); // 录制
 //    ForAndroidApp()); // 异步UI
 //    ScreenApp()); // 何时需要使用到key？
-//    ManageStateApp()); // 管理状态
-      MyLayoutApp()); // 构建布局
+    ManageStateApp()); // 管理状态
+//      MyLayoutApp()); // 构建布局
 //    MyThemeApp()); // 使用主题共享颜色和字体样式
 //    new MaterialApp(
 //      title: 'My App',

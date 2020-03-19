@@ -1,3 +1,11 @@
+Row\Column:
+表示组件的排列方向。
+Row：    1\2\3\.....  类似"horization"
+Column:  1            类似"vertical"
+         2
+         3
+         .....
+
 填充：EdgeInsets
 
 Container:
