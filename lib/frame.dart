@@ -167,6 +167,21 @@ class ShoppingListItem extends StatelessWidget {
 
 }
 
+class ShoppingApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: Text('Shopping'),),
+      body: ShoppingList(
+        products: <Product>[
+          Product(name: 'Eggs'),
+          Product(name: 'Flour'),
+          Product(name: 'Chocolate'),
+        ],),
+    );
+  }
+}
+
 class ShoppingList extends StatefulWidget {
 
 //  ShoppingList({this.products});
@@ -199,12 +214,8 @@ class _ShoppingListState extends State<ShoppingList> {
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    return new Scaffold(
-      appBar: new AppBar(
-        title: new Text('Shopping List'),
-      ),
-      body: new ListView(
+    return Container(
+      child: ListView(
         padding: new EdgeInsets.symmetric(vertical: 8.0),
         // 通过"widget属性"可以访问"ShoppingList"中的属性
         children: widget.products.map((Product product) {

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart' as prefix0;
+import 'package:flutter_app/AsyncUpdate.dart';
 
 
 // 使用主题共享颜色和字体样式
@@ -75,10 +77,17 @@ class FirstScreen extends StatelessWidget {
         child: new RaisedButton(
             child: new Text('Launch new screen.'),
             onPressed: () {
+              // 第一种跳转方法：根据注册的参数跳转
+              Navigator.of(context).pushNamed('_SecondScreen',arguments: '这是传过去的参数').then((value){
+                // 这里接收到返回值
+                print('value: ' + value.toString());
+              });
+              /* 第二种跳转方法:直接指定类名
               Navigator.push(context, new MaterialPageRoute(
                   builder:(context){
                     return new SecondScreen();
               }));
+               */
             }
         ),
       ),
@@ -90,6 +99,9 @@ class SecondScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // 获取路由参数
+    var args = ModalRoute.of(context).settings.arguments;
+    print('SecondScreen build, 这是接受到的参数： $args');
     return new Scaffold(
       appBar: new AppBar(
         title: new Text('Second Screen'),
@@ -98,7 +110,7 @@ class SecondScreen extends StatelessWidget {
         child: new RaisedButton(
             child: new Text('Go Back!'),
             onPressed: () {
-              Navigator.pop(context);
+              Navigator.of(context).pop('这是返回给上一个页面的参数！');
             }
         ),
       ),

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'AsyncUpdate.dart';
 import 'cookbook.dart';
 import 'forAndroid.dart';
 import 'life.dart';
@@ -30,26 +31,29 @@ import 'key.dart';
 void main() => runApp(
 //      RecordApp()); // 录制
 //    ForAndroidApp()); // 异步UI
-//    ScreenApp()); // 何时需要使用到key？
-//    ManageStateApp()); // 管理状态
-    LifeStateApp()); // State生命周期
-//      MyLayoutApp()); // 构建布局
-//    MyThemeApp()); // 使用主题共享颜色和字体样式
-//    new MaterialApp(
-//      title: 'My App',
-//      home: new FirstScreen(),  // 导航到新页面并返回
-//  home: new ShoppingList( // 一个较完整的例子
-//    products: <Product>[
-//      new Product(name:'Eggs'),
-//      new Product(name: 'Flour'),
-//      new Product(name: 'Chocolate chips'),
-//    ],
-//  ),
-//  home: new TutorialHome() // 使用Material组件
-//  home: new MyScaffold()   // 基础 Widget
-//    ));
-//void main() => runApp(HelloApp());
-//void main() => runApp(MyApp());
+    new MaterialApp(
+      title: 'My App',
+      home: ShoppingApp(),
+      // 路由相关：
+      // 1. 路由表实质是一个Map;
+      // 2. flutter中的路由通常是指页面;
+      // 3. 注册路由是为了简化页面跳转的流程，只需要通过路由的名字直接就可以打开新的路由了
+      routes: <String, WidgetBuilder> {
+        '_FirstScreen':(BuildContext context) => FirstScreen(), // 跳转到Second
+        '_AsyncUpdateApp':(BuildContext context) => AsyncUpdateApp(), // 异步更新UI
+        '_SecondScreen':(BuildContext context) => SecondScreen(), // 导航到新页面并返回
+        '_LifeStateApp':(BuildContext context) => LifeStateApp(), // State生命周期
+        '_ManageStateApp':(BuildContext context) => ManageStateApp(), // 管理状态
+        '_ScreenApp':(BuildContext context) => ScreenApp(), // 何时需要使用到key
+        '_MyLayoutApp':(BuildContext context) => MyLayoutApp(), // 构建布局
+        '_MyThemeApp':(BuildContext context) => MyThemeApp(), // 使用主题共享颜色和字体样式
+        '_TutorialHome':(BuildContext context) => TutorialHome(), // 使用Material组件
+        '_MyScaffold':(BuildContext context) => MyScaffold(), // 基础Widget
+        '_HelloApp':(BuildContext context) => HelloApp(), // 一个"ListTile"构成的列表
+        '_MyApp':(BuildContext context) => MyApp(), // 自带demo
+        '_ShoppingApp':(BuildContext context) => ShoppingApp(), // 一个较完整的例子
+      },
+    ));
 
 class HelloApp extends StatelessWidget {
   @override
