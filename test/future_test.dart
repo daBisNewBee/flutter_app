@@ -24,6 +24,10 @@ import 'package:flutter_test/flutter_test.dart';
 *  有自己的事件循环与 Queue，独占资源
 *  Isolate 之间可以通过消息机制进行单向通信，这些传递的消息通过对方的事件循环驱动对方进行异步处理
 *
+* 参考：
+* 23丨单线程模型怎么保证UI运行流畅？
+* https://www.kancloud.cn/alex_wsc/flutter_demo/1565215
+*
 *
 * "then 会在 Future 函数体执行完毕后立刻执行，无论是共用同一个事件循环还是进入下一个微任务。"
 *
