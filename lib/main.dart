@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:english_words/english_words.dart';
+import 'package:flutter_app/inhearited.dart';
 import 'AsyncUpdate.dart';
 import 'cookbook.dart';
 import 'forAndroid.dart';
@@ -32,7 +33,7 @@ void main() => runApp(
 //      RecordApp());
     new MaterialApp(
       title: 'My App',
-      home: ForAndroidApp(),
+      home: InheritedWidgetRoute(),
       // 路由相关：
       // 1. 路由表实质是一个Map;
       // 2. flutter中的路由通常是指页面;
@@ -52,6 +53,7 @@ void main() => runApp(
         '_MyApp':(BuildContext context) => MyApp(), // 自带demo
         '_ShoppingApp':(BuildContext context) => ShoppingApp(), // 一个较完整的例子
         '_ForAndroidApp':(BuildContext context) => ForAndroidApp(), // 异步UI
+        '_InheritedApp' :(BuildContext context) => InheritedWidgetRoute(), // 数据共享
       },
     ));
 
