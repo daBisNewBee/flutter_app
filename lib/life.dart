@@ -137,8 +137,8 @@ class _MySFBeanState extends State<MySFBean> with WidgetsBindingObserver {
         break;
       case AppLifecycleState.resumed:
         break;
-      case AppLifecycleState.suspending:
-        break;
+//      case AppLifecycleState.suspending:
+//        break;
     }
   }
 }

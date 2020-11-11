@@ -1,4 +1,6 @@
 
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 
@@ -99,6 +101,44 @@ class InheritedWidgetRoute extends StatefulWidget {
 
 class _InheritedWidgetRouteState extends State<InheritedWidgetRoute> {
   int count = 0;
+
+  @override
+  void initState() {
+    print('initState start.....');
+    checkUpdate().then((value) => print('then.....')).catchError((onError) => print('onError'));
+    print('initState end.....');
+  }
+
+  /*
+  * I/flutter (22685): initState start.....
+    I/flutter (22685): initState end.....
+    I/flutter (22685): then.....
+    2s后....
+  * I/flutter (22685): 这里是延时任务执行完成！
+  * */
+  Future checkUpdate() async {
+    Future.delayed(Duration(seconds: 2)).then((value){
+      print('这里是延时任务执行完成');
+      return Future.value(true);
+    });
+    return Future.value(false);
+  }
+
+  /*
+  * I/flutter (22685): initState start.....
+    I/flutter (22685): initState end.....
+    2s后....
+  * I/flutter (22685): 这里是延时任务执行完成！
+  * I/flutter (22685): then.....
+  * */
+  Future checkUpdateByComplete() async {
+    Completer complete = Completer();
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      print('这里是延时任务执行完成！');
+      complete.complete();// 用于控制外层的"then"什么时候执行！！
+    });
+    return complete.future;
+  }
 
   @override
   Widget build(BuildContext context) {
